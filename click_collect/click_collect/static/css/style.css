@@ -1,0 +1,24 @@
+.container-perso{
+    padding-top: 20px;
+}
+
+.navbar-perso{
+    background-color: white;    
+    border-bottom: 1px solid #cccccc;
+}
+
+h2{
+    padding-bottom: 20px;
+}
+
+.image_thumb{
+    width: 30px;
+}
+
+.col_price{
+    width: 100px;
+}
+
+.euro_price::after { 
+    content: "\20AC ";
+  }

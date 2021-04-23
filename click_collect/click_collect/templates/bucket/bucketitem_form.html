@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h2>New Bucket</h2>
+<h3>Market {{market}}</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <th>Photo</th>
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th class="col_price">Price</th>
+        </tr>
+        {{ form.management_form }}
+        {% for form_item in form %}
+        <tr class="product_row">
+            <td>{% if form_item.instance.image%}<img src="{{form_item.instance.image.url}}" class="image_thumb"/>{% endif %}</td>
+            <td>{{form_item.instance.name}}</td>
+            <td class="price">{{form_item.instance.price }} / {{form_item.instance.get_unit_display }}</td>
+            <td >{{form_item.product_pk}} {{ form_item.quantity }} </td>
+            <td class="total_price euro_price">0</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <th colspan="4" class='text-right'>Total Price</th>
+            <th id="total" class="euro_price">0</th>
+        </tr>
+    </table>
+    <div class="float-right">
+        <a href="{% url 'market_list' %}" class="btn btn-secondary">Go Back</a>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Save & Checkout</button>
+    </div>
+</form>
+{% endblock %}
+
+{%block js %}
+<script>
+document.addEventListener('input', function (evt) {
+    update_price_total();
+});
+
+(function() {
+    update_price_total();
+})();
+</script>
+{% endblock %}
